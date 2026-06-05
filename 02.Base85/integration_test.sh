@@ -2,7 +2,7 @@
 
 status=true
 
-dd bs=512 count=1 if=/dev/random of=random.bin 2>/dev/null
+dd bs=512 count=1 if=/dev/urandom of=random.bin 2>/dev/null
 python -c 'import sys; import base64; sys.stdout.buffer.write(base64.b85encode(sys.stdin.buffer.read()))' <random.bin >random.b85
 
 # ---------------------------------------------------

@@ -12,17 +12,28 @@
 template <typename Iterator>
 void bubble_sort(Iterator begin, Iterator end)
 {
+    if (begin == end)
+    {
+        return;
+    }
+
     for (Iterator l = end; l != begin; --l)
     {
+        bool changed = false;
 
-        for (Iterator r= begin; r+ 1 != l; ++it)
+        for (Iterator r = begin; r + 1 != l; ++r)
         {
-            if (*(r+ 1) < *it)
+            if (*(r + 1) < *r)
             {
                 using std::swap;
-                swap(*it, *(r+ 1));
+                swap(*r, *(r + 1));
                 changed = true;
             }
+        }
+
+        if (!changed)
+        {
+            break;
         }
     }
 }
@@ -31,35 +42,40 @@ void bubble_sort(Iterator begin, Iterator end)
 template <typename Iterator>
 void quick_sort(Iterator begin, Iterator end)
 {
-    auto size = end - begin;
-
-    auto middle = *(begin + size / 2);
-
-    size_t left = 0;
-    size_t right = size - 1;
-
-    while (left <= right)
+    if (end - begin <= 1)
     {
-        while (*(begin + left) < middle)
+        return;
+    }
+
+    auto pivot = *(begin + (end - begin) / 2);
+    Iterator left = begin;
+    Iterator right = end;
+
+    while (left < right)
+    {
+        while (*left < pivot)
         {
             ++left;
         }
 
-        while (middle < *(begin + right))
+        do
         {
             --right;
         }
+        while (pivot < *right);
 
-        if (left <= right)
+        if (left >= right)
         {
-            std::swap(*(begin + left), *(begin + right));
-            left+=1;
-            right-=1;
+            break;
         }
+
+        using std::swap;
+        swap(*left, *right);
+        ++left;
     }
 
-    quick_sort(begin, begin + right + 1);
-    quick_sort(begin + left, end);
+    quick_sort(begin, left);
+    quick_sort(left, end);
 }
 
-#endif 
+#endif // SORTING_H

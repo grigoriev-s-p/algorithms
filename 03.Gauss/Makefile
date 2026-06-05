@@ -1,5 +1,5 @@
 CXX_EXTRA_FLAGS=-I ../external/lazycsv/include -I ../external/eigen $(shell pkgconf --cflags openblas)
-LD_EXTRA_OPT=$(pkgconf --libs openblas)
+LD_EXTRA_OPT=$(shell pkgconf --libs openblas)
 
 include ../Makefile.inc
 

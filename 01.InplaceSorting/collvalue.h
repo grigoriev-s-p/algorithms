@@ -1,6 +1,9 @@
 #ifndef COLLVALUE_H
 #define COLLVALUE_H
 
+#include <cstddef>
+#include <utility>
+
 // Header-only
 
 template <typename T> class CollectingValue

@@ -86,6 +86,11 @@ std::vector<uint8_t> base85::decode(std::vector<uint8_t> const &b85str)
                 }
             }
 
+            if (digit == -1)
+            {
+                throw std::runtime_error("Invalid Base85 character");
+            }
+
             value = value * 85 + digit;
         }
 

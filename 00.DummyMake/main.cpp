@@ -2,10 +2,10 @@
 
 #include "library.h"
 
-int main(int argc, char* argv[])
+int main()
 {
     std::cout << "Basic demo\n";
-    DemoClass *a = new DemoClass();
-    a->foo();
+    DemoClass a;
+    a.foo();
     return 0;
 }

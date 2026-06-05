@@ -10,7 +10,7 @@ TEST(GaussSolve, SmallSolve)
 {
     GaussMatrix ab(2, 3);
     ab << 1.1, 2.2, 3.3,
-          4.4, 5.5, 6.6;
+    4.4, 5.5, 6.6;
 
     const auto x = Gauss_solve(ab);
 
@@ -23,7 +23,7 @@ TEST(GaussSolve, Pivoting)
 {
     GaussMatrix ab(2, 3);
     ab << 0.0, 2.0, 4.0,
-          1.0, -1.0, 1.0;
+    1.0, -1.0, 1.0;
 
     const auto x = Gauss_solve(ab);
 
@@ -36,7 +36,7 @@ TEST(GaussSolve, SingularMatrixThrows)
 {
     GaussMatrix ab(2, 3);
     ab << 1.0, 2.0, 3.0,
-          2.0, 4.0, 6.0;
+    2.0, 4.0, 6.0;
 
     EXPECT_THROW(Gauss_solve(ab), std::runtime_error);
 }

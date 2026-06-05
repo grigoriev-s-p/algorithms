@@ -11,66 +11,69 @@
 
 namespace
 {
-    std::string trim(std::string s)
-    {
-        if (s.size() >= 3 &&
+std::string trim(std::string s)
+{
+    if (s.size() >= 3 &&
             static_cast<unsigned char>(s[0]) == 0xEF &&
             static_cast<unsigned char>(s[1]) == 0xBB &&
             static_cast<unsigned char>(s[2]) == 0xBF)
-        {
-            s.erase(0, 3);
-        }
-
-        const auto is_not_space = [](unsigned char ch) { return !std::isspace(ch); };
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), is_not_space));
-        s.erase(std::find_if(s.rbegin(), s.rend(), is_not_space).base(), s.end());
-        return s;
-    }
-
-    bool parse_double(const std::string &text, double &value)
     {
-        const std::string t = trim(text);
-        if (t.empty())
-        {
-            return false;
-        }
-
-        std::size_t pos = 0;
-        try
-        {
-            value = std::stod(t, &pos);
-        }
-        catch (...)
-        {
-            return false;
-        }
-
-        while (pos < t.size() && std::isspace(static_cast<unsigned char>(t[pos])))
-        {
-            ++pos;
-        }
-
-        return pos == t.size();
+        s.erase(0, 3);
     }
 
-    std::vector<std::string> split_csv_line(const std::string &line)
+    const auto is_not_space = [](unsigned char ch)
     {
-        std::vector<std::string> cells;
-        std::string cell;
-        std::stringstream ss(line);
+        return !std::isspace(ch);
+    };
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), is_not_space));
+    s.erase(std::find_if(s.rbegin(), s.rend(), is_not_space).base(), s.end());
+    return s;
+}
 
-        while (std::getline(ss, cell, ','))
-        {
-            cells.push_back(cell);
-        }
-
-        if (!line.empty() && line.back() == ',')
-        {
-            cells.emplace_back();
-        }
-
-        return cells;
+bool parse_double(const std::string &text, double &value)
+{
+    const std::string t = trim(text);
+    if (t.empty())
+    {
+        return false;
     }
+
+    std::size_t pos = 0;
+    try
+    {
+        value = std::stod(t, &pos);
+    }
+    catch (...)
+    {
+        return false;
+    }
+
+    while (pos < t.size() && std::isspace(static_cast<unsigned char>(t[pos])))
+    {
+        ++pos;
+    }
+
+    return pos == t.size();
+}
+
+std::vector<std::string> split_csv_line(const std::string &line)
+{
+    std::vector<std::string> cells;
+    std::string cell;
+    std::stringstream ss(line);
+
+    while (std::getline(ss, cell, ','))
+    {
+        cells.push_back(cell);
+    }
+
+    if (!line.empty() && line.back() == ',')
+    {
+        cells.emplace_back();
+    }
+
+    return cells;
+}
 }
 
 GaussMatrix load_csv_to_matrix(const char *filename)
